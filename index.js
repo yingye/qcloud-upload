@@ -14,9 +14,10 @@ module.exports = function (config = {}) {
     SecretKey: '',
     Bucket: '',
     Region: '',
-    Prefix: '',
-    OverWrite: false,
-    Dir: ''
+    prefix: '',
+    overWrite: false,
+    dirPath: '',
+    distDirName: ''
   }, config);
   
   if (config.Bucket.indexOf('-') === -1) {
@@ -27,8 +28,6 @@ module.exports = function (config = {}) {
   var uploadedFiles = 0;
   var uploadedFail = 0;
   var tasks = [];
-  var dirPath = path.resolve(__dirname, config.Dir);
-  var dirName = config.Dir.substring(config.Dir.match(/((\.)+\/+)*/g)[0].length)
 
   var cos = new COS({
     SecretId: config.SecretId,
@@ -36,11 +35,11 @@ module.exports = function (config = {}) {
   });
 
   // get files
-  ndir.walk(dirPath, function onDir(dirpath, files) {
+  ndir.walk(config.dirPath, function onDir(dirpath, files) {
     for (var i = 0, l = files.length; i < l; i++) {
       var info = files[i];
       if (info[1].isFile()) {
-        upload(info[1], info[0].substring(info[0].indexOf(dirName)), info[0])
+        upload(info[1], info[0].substring(info[0].indexOf(config.distDirName)), info[0]);
       }
     }
   }, function end() {
@@ -62,7 +61,7 @@ module.exports = function (config = {}) {
 
   // upload files
   function upload(file, fileRelativePath, filePath) {
-    var fileKey = path.join(config.Prefix, fileRelativePath);
+    var fileKey = path.join(config.prefix, fileRelativePath);
     var handler = function () {
       var defer = Q.defer();
       upload();
@@ -106,7 +105,7 @@ module.exports = function (config = {}) {
       }
 
       function upload () {
-        if (!config.OverWrite) {
+        if (!config.overWrite) {
           check(function (status) {
             if (status) {
               existFiles++;
