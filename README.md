@@ -1,6 +1,6 @@
 # qcloud-upload
 
-腾讯云上传插件，支持自定义文件前缀及是否覆盖的多文件上传
+基于 `nodejs` 腾讯云上传插件，支持自定义文件前缀、覆盖及非覆盖上传方式
 
 ## Install
 
@@ -12,8 +12,9 @@ npm install --save-dev qcloud-upload
 
 Step 1. 创建文件 `upload.js`
 
-```
+```js
 const uploadQcloud = require('qcloud-upload');
+
 const options = {
   AppId: 'STRING_VALUE',
   Region: 'STRING_VALUE',
@@ -23,9 +24,9 @@ const options = {
   Prefix: 'demo/sub',
   Dir: './examples',
   OverWrite: false
-}
+};
 
-uploadQcloud(options)
+uploadQcloud(options);
 ```
 
 Step 2. 执行上传操作 `node upload.js`
@@ -53,4 +54,4 @@ There are 7 options:
 
 该插件基于 [腾讯云 COS Nodejs SDK V5](https://github.com/tencentyun/cos-nodejs-sdk-v5) 构建，可参考腾讯云官方文档 [Node.js SDK](https://cloud.tencent.com/document/product/436/8629)。
 
-如果项目中使用构建工具 `gulp`, 可使用 [gulp-upload-qcloud](https://github.com/yingye/gulp-upload-qcloud)
+如果项目中使用构建工具 `gulp`，建议使用 [gulp-upload-qcloud](https://github.com/yingye/gulp-upload-qcloud)。
