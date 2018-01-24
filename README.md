@@ -55,7 +55,7 @@ Type: Object
 腾讯云官方 api 修改，去掉 `AppId` 概念，`Bucket` 需要传入这样的格式 `test-1250000000`。本插件，兼容两种配置方式，示例如下：
 
 ```js
-// 旧api示例
+// old api options
 const options = {
   AppId: 'your AppId',
   Bucket: 'old Bucket',
@@ -64,7 +64,7 @@ const options = {
 ```
 
 ```js
-// 新api示例
+// new api options
 const options = {
   Bucket: 'AppId-Bucket',
   ...
