@@ -18,6 +18,10 @@ module.exports = function (config = {}) {
     OverWrite: false,
     Dir: ''
   }, config);
+  
+  if (config.Bucket.indexOf('-') === -1) {
+    config.Bucket += '-' + config.AppId;
+  }
 
   var existFiles = 0;
   var uploadedFiles = 0;
@@ -27,7 +31,6 @@ module.exports = function (config = {}) {
   var dirName = config.Dir.substring(config.Dir.match(/((\.)+\/+)*/g)[0].length)
 
   var cos = new COS({
-    AppId: config.AppId,
     SecretId: config.SecretId,
     SecretKey: config.SecretKey
   });

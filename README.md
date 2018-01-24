@@ -39,9 +39,9 @@ Step 2. 执行上传操作 `node upload.js`
 
 Type: Object
 
-There are 7 options:
+##### There are 7 options:
 
-* `AppId`(string): 注册或登录 [腾讯云](https://cloud.tencent.com/login) 获取您的AppId。
+* `AppId`(string): 注册或登录 [腾讯云](https://cloud.tencent.com/login) 获取您的AppId，可参考下方说明。
 * `SecretId`(string): 到 [腾讯云控制台密钥管理](https://console.cloud.tencent.com/capi) 获取您的项目 SecretId 和 SecretKey。
 * `SecretKey`(string): 同 SecretId。
 * `Bucket`(string): 到 [COS 对象存储控制台](https://console.cloud.tencent.com/cos4) 创建存储桶，得到 Bucket（存储桶名称） 和 Region（地域名称）。
@@ -49,6 +49,27 @@ There are 7 options:
 * `Prefix`(string): 自定义文件前缀，例如本地文件路径 img.png ，设置了 `Prefix: 'demo'`，最终腾讯云路径为 `demo/img.png`，默认为空。
 * `OverWrite`(string): 是否覆盖同名文件，默认 false。
 * `Dir`(string): 上传文件夹的 **相对路径** ，以本项目 examples 文件夹为例，应设置 `Dir: './examples'`。
+
+##### ! `AppId` 和 `Bucket` 的说明：
+
+腾讯云官方 api 修改，去掉 `AppId` 概念，`Bucket` 需要传入这样的格式 `test-1250000000`。本插件，兼容两种配置方式，示例如下：
+
+```js
+// 旧api示例
+const options = {
+  AppId: 'your AppId',
+  Bucket: 'old Bucket',
+  ...
+};
+```
+
+```js
+// 新api示例
+const options = {
+  Bucket: 'AppId-Bucket',
+  ...
+};
+```
 
 ## TIPS
 
