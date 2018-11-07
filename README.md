@@ -13,7 +13,6 @@ npm install --save-dev qcloud-upload
 Step 1. 创建文件 `upload.js`
 
 ```js
-const path = require('path');
 const uploadQcloud = require('qcloud-upload');
 
 const options = {
@@ -23,8 +22,7 @@ const options = {
   SecretKey: 'STRING_VALUE',
   Bucket: 'STRING_VALUE',
   prefix: 'test',
-  dirPath: path.resolve(__dirname, './examples'),
-  distDirName: 'examples',
+  src: './examples',
   overWrite: 1
 };
 
@@ -41,7 +39,7 @@ Step 2. 执行上传操作 `node upload.js`
 
 Type: Object
 
-##### There are 9 options:
+##### There are 8 options:
 
 * `AppId`(string): 注册或登录 [腾讯云](https://cloud.tencent.com/login) 获取您的AppId，可参考下方说明。
 * `SecretId`(string): 到 [腾讯云控制台密钥管理](https://console.cloud.tencent.com/capi) 获取您的项目 SecretId 和 SecretKey。
@@ -50,6 +48,9 @@ Type: Object
 * `Region`(string): Bucket 所在区域。枚举值请见：[Bucket 地域信息](https://cloud.tencent.com/document/product/436/6224)。
 * `prefix`(string): 自定义文件前缀，例如本地文件路径 img.png ，设置了 `Prefix: 'demo'`，最终腾讯云路径为 `demo/img.png`，默认为空。
 * `overWrite`(string): 是否覆盖同名文件，默认 false。
+* `src`(string): 上传文件夹的 **相对路径** ，已本项目 examples 文件夹为例，设置 `src: './examples'`，上传腾讯云后文件路径为 `https://static.demo.com/your-options.prefix/img.png`。(**v1.3.0以上版本支持**)
+
+以下 API 在 v1.3.0+ 版本中废弃：
 * `dirPath`(string): 上传文件夹的 **绝对路径** ，以本项目 examples 文件夹为例，应设置 `path.resolve(__dirname, './examples')`。
 * `distDirName`(string): 截取文件路径参考项，以本项目 examples 文件夹为例，不设置该项，上传腾讯云后文件路径为 `https://static.demo.com/your-options.prefix/Users/yingye/Desktop/qcloud-upload/examples/img.png`。若设置该项 `distDirName: 'examples'` 后，文件URL为 `https://static.demo.com/your-options.prefix/examples/img.png`，相当于对 `dirPath` 绝对路径做了截取操作。
 

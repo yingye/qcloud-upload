@@ -16,6 +16,7 @@ module.exports = function (config = {}) {
     Region: '',
     prefix: '',
     overWrite: false,
+    src: '',
     dirPath: '',
     distDirName: ''
   }, config);
@@ -34,12 +35,22 @@ module.exports = function (config = {}) {
     SecretKey: config.SecretKey
   });
 
+  var srcPath = path.resolve(process.cwd(), config.src);
+  if (!config.src) {
+    log(chalk.yellow('dirPath API 即将废弃，请升级配置信息，更多内容请访问 https://github.com/yingye/qcloud-upload'));
+    srcPath = config.dirPath;
+  }
+  
   // get files
-  ndir.walk(config.dirPath, function onDir(dirpath, files) {
+  ndir.walk(srcPath, function onDir(dirpath, files) {
     for (var i = 0, l = files.length; i < l; i++) {
       var info = files[i];
       if (info[1].isFile()) {
-        upload(info[1], info[0].substring(info[0].indexOf(config.distDirName)), info[0]);
+        if (config.src) {
+          upload(info[1], info[0].substring(srcPath.length), info[0]);
+        } else {
+          upload(info[1], info[0].substring(info[0].indexOf(config.distDirName)), info[0]);
+        }
       }
     }
   }, function end() {
@@ -55,8 +66,8 @@ module.exports = function (config = {}) {
         });
     }
   }, function error(err, errPath) {
-    log(chalk.red('Please you check your Dir option, and use absolute path.'))
-    log('err: ', errPath, ' error: ', err)
+    log(chalk.red('Please you check your Dir option, and use absolute path.'));
+    log('err: ', errPath, ' error: ', err);
   });
 
   // upload files
