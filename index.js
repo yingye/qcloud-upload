@@ -35,7 +35,7 @@ module.exports = function (config = {}) {
     SecretKey: config.SecretKey
   });
 
-  var srcPath = path.resolve(process.cwd(), config.src);
+  var srcPath = path.resolve(path.parse(process.argv[1]).dir, config.src);
   if (!config.src) {
     log(chalk.yellow('dirPath API 即将废弃，请升级配置信息，更多内容请访问 https://github.com/yingye/qcloud-upload'));
     srcPath = config.dirPath;
