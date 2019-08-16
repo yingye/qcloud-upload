@@ -16,6 +16,7 @@ module.exports = function (config = {}) {
     Region: '',
     prefix: '',
     overWrite: false,
+    Headers: false,
     src: '',
     dirPath: '',
     distDirName: ''
@@ -93,16 +94,17 @@ module.exports = function (config = {}) {
       }
 
       function putFile () {
-        cos.putObject({
+        let obj = assign(config.Headers || {}, {
           Bucket: config.Bucket,
           Region: config.Region,
           Key: fileKey,
           ContentLength: fs.statSync(filePath).size,
           Body: fs.createReadStream(filePath),
           onProgress (progressData) {
-            // log(progressData)
-          },
-        }, function (err, data) {
+            // console.log(progressData)
+          }
+        })
+        cos.putObject(obj, function (err, data) {
           if (err) {
             uploadedFail++;
             log('err-putObject', err);

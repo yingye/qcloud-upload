@@ -2,6 +2,10 @@
 
 Change log for qcloud-upload. [Details at Github](https://github.com/yingye/qcloud-upload)
 
+## [1.5.0] - 2019-08-16
+
+- Add Headers option.
+
 ## [1.4.0] - 2018-11-08
 
 - 相对路径优化

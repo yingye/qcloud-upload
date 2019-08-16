@@ -21,6 +21,9 @@ const options = {
   SecretId: 'STRING_VALUE',
   SecretKey: 'STRING_VALUE',
   Bucket: 'STRING_VALUE',
+  Headers: {
+    CacheControl: 'max-age=31536000'
+  },
   prefix: 'test',
   src: './examples',
   overWrite: 1
@@ -46,6 +49,7 @@ Type: Object
 * `SecretKey`(string): 同 SecretId。
 * `Bucket`(string): 到 [COS 对象存储控制台](https://console.cloud.tencent.com/cos4) 创建存储桶，得到 Bucket（存储桶名称） 和 Region（地域名称）。
 * `Region`(string): Bucket 所在区域。枚举值请见：[Bucket 地域信息](https://cloud.tencent.com/document/product/436/6224)。
+* `Headers(object)`: 设置头信息，具体 API 参考[简单上传-参数说明](https://cloud.tencent.com/document/product/436/35649)。
 * `prefix`(string): 自定义文件前缀，例如本地文件路径 img.png ，设置了 `Prefix: 'demo'`，最终腾讯云路径为 `demo/img.png`，默认为空。
 * `overWrite`(string): 是否覆盖同名文件，默认 false。
 * `src`(string): 上传文件夹相 **相对路径**，以本项目 examples 文件夹为例，设置 `src: './examples'`，上传腾讯云后文件路径为 `https://static.demo.com/your-options.prefix/img.png`。(**v1.3.0以上版本支持**)
